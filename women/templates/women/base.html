@@ -8,7 +8,7 @@
     <title>{{title}}</title>
     <link type="text/css" href="{% static 'women/css/style.css' %}" rel="stylesheet" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <!-- <link rel="shortcut icon" href="{% static 'women/images/main.ico' %}" type="image/x-icon" /> -->
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
@@ -24,12 +24,15 @@
                                 <div class="logo"></div>
                             </a></li>
                         {% for m in menu %}
-                        {% if not forloop.last %}
+
                         <li><a href="{% url m.url_name %}">{{m.title}}</a></li>
-                        {% else %}
-                        <li class="last"><a href="{% url m.url_name %}">{{m.title}}</a></li>
-                        {% endif %}
+
+
+
                         {% endfor %}
+                        <li class="last">
+                            <a href="{% url 'register' %}">Регистрация</a> | <a href="{% url 'login' %}">Войти</a>
+                        </li>
                     </ul>
                     <div class="clear"></div>
                 </div>

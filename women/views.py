@@ -1,4 +1,4 @@
-from django.http.response import Http404
+# from django.http.response import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls.base import reverse_lazy  # в качестве главной
 #  страницы мы бы хотели отобразить некоторый
@@ -11,9 +11,14 @@ from django.views.generic.edit import CreateView
 from women.forms import *
 from women.models import Category, Women
 from django.views.generic import ListView, DetailView
-
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
+from django import forms
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
 # Create your views here.
+
 
 menu = [{'title': "О сайте", 'url_name': 'about'},
         {'title': "Добавить статью", 'url_name': 'add_page'},
@@ -118,12 +123,12 @@ def login(request):
 
 def about(request):
 
-    contact_list = Women.objects.all()
-    paginator = Paginator(contact_list, 3)
+    # contact_list = Women.objects.all()
+    # paginator = Paginator(contact_list, 3)
 
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-    return render(request, 'women/about.html', {'page_obj': page_obj, 'menu': menu, 'title': 'О сайте'})
+    # page_number = request.GET.get('page')
+    # page_obj = paginator.get_page(page_number)
+    return render(request, 'women/about.html', {'menu': menu, 'title': 'О сайте'})
 
 
 def categories(request, cat):
@@ -168,3 +173,13 @@ class WomenCategory(DataMixin, ListView):
 #         return redirect('/')
 
 #     return HttpResponse(f"<h1>Архив по годам</h1>{year}</p>")
+class RegisterUser(DataMixin, CreateView):
+
+    form_class = UserCreationForm
+    template_name = 'women/register.html'
+    success_url = reverse_lazy('login')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title="Регистрация")
+        return dict(list(context.items()) + list(c_def.items()))
