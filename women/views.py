@@ -6,11 +6,13 @@ from django.urls.base import reverse_lazy  # в качестве главной
 #  нам нужно импортировать встроенный в Django шаблонизатор.
 from .utils import *
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse
+from django.http import HttpResponse, request
 from django.views.generic.edit import CreateView
 from women.forms import *
 from women.models import Category, Women
 from django.views.generic import ListView, DetailView
+
+from django.core.paginator import Paginator
 # Create your views here.
 
 menu = [{'title': "О сайте", 'url_name': 'about'},
@@ -21,6 +23,7 @@ menu = [{'title': "О сайте", 'url_name': 'about'},
 
 
 class WomenHome(DataMixin, ListView,):
+
     model = Women
     template_name = 'women/index.html'
     context_object_name = 'posts'
@@ -114,7 +117,13 @@ def login(request):
 
 
 def about(request):
-    return render(request, 'women/index.html', {'menu': menu, 'title': 'О сайте'})
+
+    contact_list = Women.objects.all()
+    paginator = Paginator(contact_list, 3)
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'women/about.html', {'page_obj': page_obj, 'menu': menu, 'title': 'О сайте'})
 
 
 def categories(request, cat):
