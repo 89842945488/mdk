@@ -13,10 +13,11 @@ from women.models import Category, Women
 from django.views.generic import ListView, DetailView
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django import forms
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.views import LoginView, LogoutView
 # Create your views here.
 
 
@@ -106,8 +107,8 @@ def contact(request):
     return HttpResponse("Обратная связь")  # заглушки на будущие страницы
 
 
-def login(request):
-    return HttpResponse("Авторизация")  # заглушки на будущие страницы
+# def login(request):
+#     return HttpResponse("Авторизация")  # заглушки на будущие страницы
 
 
 # def index(request):
@@ -131,8 +132,8 @@ def about(request):
     return render(request, 'women/about.html', {'menu': menu, 'title': 'О сайте'})
 
 
-def categories(request, cat):
-    return HttpResponse(f"<h1>Статьи по категориям</h1>{cat}</p>")
+# def categories(request, cat):
+#     return HttpResponse(f"<h1>Статьи по категориям</h1>{cat}</p>")
 
 
 # def show_category(request, cat_id):
@@ -183,3 +184,26 @@ class RegisterUser(DataMixin, CreateView):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title="Регистрация")
         return dict(list(context.items()) + list(c_def.items()))
+
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        return redirect('home')
+
+
+class LoginUser(DataMixin, LoginView):
+    form_class = LoginUserForm
+    template_name = 'women/login.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title="Авторизация")
+        return dict(list(context.items()) + list(c_def.items()))
+
+    def get_success_url(self):
+        return reverse_lazy('home')
+
+
+def logout_user(request):
+    logout(request)
+    return redirect('login')
