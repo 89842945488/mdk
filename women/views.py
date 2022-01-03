@@ -1,6 +1,7 @@
 # from django.http.response import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls.base import reverse_lazy  # в качестве главной
+
 #  страницы мы бы хотели отобразить некоторый
 # шаблон с именем index.html. Для этого, вначале
 #  нам нужно импортировать встроенный в Django шаблонизатор.
@@ -18,22 +19,24 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.views import LoginView, LogoutView
+
 # Create your views here.
 
 
-menu = [{'title': "О сайте", 'url_name': 'about'},
-        {'title': "Добавить статью", 'url_name': 'add_page'},
-        {'title': "Обратная связь", 'url_name': 'contact'},
-        {'title': "Войти", 'url_name': 'login'}  # главное меню сайта
-        ]
+menu = [
+    {"title": "О сайте", "url_name": "about"},
+    {"title": "Добавить статью", "url_name": "add_page"},
+    {"title": "Обратная связь", "url_name": "contact"},
+    {"title": "Войти", "url_name": "login"},  # главное меню сайта
+]
 
 
-class WomenHome(DataMixin, ListView,):
+class WomenHome(DataMixin, ListView):
 
     model = Women
-    template_name = 'women/index.html'
-    context_object_name = 'posts'
-    extra_context = {'title': 'Главная страница'}
+    template_name = "women/index.html"
+    context_object_name = "posts"
+    extra_context = {"title": "Главная страница"}
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -45,19 +48,21 @@ class WomenHome(DataMixin, ListView,):
         # context['cat_selected'] = 0
 
     def get_queryset(self):
-        return Women.objects.filter(is_published=True)
+        return Women.objects.filter(is_published=True).select_related("cat")
 
 
 class ShowPost(DataMixin, DetailView):
     model = Women
-    template_name = 'women/post.html'
-    slug_url_kwarg = 'post_slug'
-    context_object_name = 'post'
+    template_name = "women/post.html"
+    slug_url_kwarg = "post_slug"
+    context_object_name = "post"
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context(title=context['post'])
+        c_def = self.get_user_context(title=context["post"])
         return dict(list(context.items()) + list(c_def.items()))
+
+
 # def show_post(request, post_slug):
 #     post = get_object_or_404(Women, slug=post_slug)
 #     context = {
@@ -71,7 +76,7 @@ class ShowPost(DataMixin, DetailView):
 
 
 def about(request):
-    return render(request, 'women/about.html', {'menu': menu, 'title': 'О сайте'})
+    return render(request, "women/about.html", {"menu": menu, "title": "О сайте"})
 
 
 # def addpage(request):
@@ -91,9 +96,9 @@ def about(request):
 
 class AddPage(LoginRequiredMixin, DataMixin, CreateView):
     form_class = AddPostForm
-    template_name = 'women/addpage.html'
-    success_url = reverse_lazy('home')
-    login_url = reverse_lazy('home')
+    template_name = "women/addpage.html"
+    success_url = reverse_lazy("home")
+    login_url = reverse_lazy("home")
     raise_exception = True
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -129,7 +134,7 @@ def about(request):
 
     # page_number = request.GET.get('page')
     # page_obj = paginator.get_page(page_number)
-    return render(request, 'women/about.html', {'menu': menu, 'title': 'О сайте'})
+    return render(request, "women/about.html", {"menu": menu, "title": "О сайте"})
 
 
 # def categories(request, cat):
@@ -152,19 +157,24 @@ def about(request):
 
 #     return render(request, 'women/index.html', context=context)
 
+
 class WomenCategory(DataMixin, ListView):
     model = Women
-    template_name = 'women/index.html'
-    context_object_name = 'posts'
+    template_name = "women/index.html"
+    context_object_name = "posts"
     allow_empty = False
 
     def get_queryset(self):
-        return Women.objects.filter(cat__slug=self.kwargs['cat_slug'], is_published=True)
+        return Women.objects.filter(
+            cat__slug=self.kwargs["cat_slug"], is_published=True
+        ).select_related("cat")
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context(title='Категория - ' + str(context['posts'][0].cat),
-                                      cat_selected=context['posts'][0].cat_id)
+        c = Category.objects.get(slug=self.kwargs["cat_slug"])
+        c_def = self.get_user_context(
+            title="Категория - " + str(c.name), cat_selected=c.pk
+        )
 
         return dict(list(context.items()) + list(c_def.items()))
 
@@ -177,8 +187,8 @@ class WomenCategory(DataMixin, ListView):
 class RegisterUser(DataMixin, CreateView):
 
     form_class = UserCreationForm
-    template_name = 'women/register.html'
-    success_url = reverse_lazy('login')
+    template_name = "women/register.html"
+    success_url = reverse_lazy("login")
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -188,12 +198,12 @@ class RegisterUser(DataMixin, CreateView):
     def form_valid(self, form):
         user = form.save()
         login(self.request, user)
-        return redirect('home')
+        return redirect("home")
 
 
 class LoginUser(DataMixin, LoginView):
     form_class = LoginUserForm
-    template_name = 'women/login.html'
+    template_name = "women/login.html"
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -201,9 +211,9 @@ class LoginUser(DataMixin, LoginView):
         return dict(list(context.items()) + list(c_def.items()))
 
     def get_success_url(self):
-        return reverse_lazy('home')
+        return reverse_lazy("home")
 
 
 def logout_user(request):
     logout(request)
-    return redirect('login')
+    return redirect("login")
