@@ -4,7 +4,7 @@ from women.models import *
 register = template.Library()
 
 
-@register.simple_tag(name='getcats')
+@register.simple_tag(name="getcats")
 def get_categories(filter=None):
     if not filter:
         return Category.objects.all()
@@ -12,7 +12,7 @@ def get_categories(filter=None):
         return Category.objects.filter(pk=filter)
 
 
-@register.inclusion_tag('women/list_categories.html')
+@register.inclusion_tag("women/list_categories.html")
 def show_categories(sort=None, cat_selected=0):
     if not sort:
         cats = Category.objects.all()

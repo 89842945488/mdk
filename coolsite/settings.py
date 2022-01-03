@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "captcha",
     "debug_toolbar",
     "women.apps.WomenConfig",  # мое приложение
 ]
@@ -129,7 +130,7 @@ STATICFILES_DIRS = []
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
+CAPTCHA_CHALLENGE_FUNCT = "captcha.helpers.random_char_challenge"
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"
@@ -144,3 +145,12 @@ MEDIA_URL = "/media/"
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
+        "LOCATION": os.path.join(BASE_DIR, "coolsite_cache"),
+    }
+}
+CAPTCHA_IMAGE_SIZE = [100, 50]
+CAPTCHA_FONT_SIZE = 30

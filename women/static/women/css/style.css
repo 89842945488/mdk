@@ -16,7 +16,7 @@ a {
 	text-decoration: underline;
 } */
 
-img {max-width: 600px; height: 500px;}
+/* img {max-width: 500px; height: 200px;} */
 
 img.img-article-left {
 	max-width: auto;
@@ -386,6 +386,7 @@ ul.lang-list li a:hover {color: #fdc073;}
     padding: 0;
     color: #CC0000;
 }
+ 
 .list-pages {
 	text-align: center;
 	margin: 0 0 20px 0;
@@ -476,3 +477,4 @@ ul.lang-list li a:hover {color: #fdc073;}
   transform: translateY(0);
 }
 
+ 
