@@ -23,12 +23,12 @@ from django.contrib.auth.views import LoginView, LogoutView
 # Create your views here.
 
 
-menu = [
-    {"title": "О сайте", "url_name": "about"},
-    {"title": "Добавить статью", "url_name": "add_page"},
-    {"title": "Обратная связь", "url_name": "contact"},
-    {"title": "Войти", "url_name": "login"},  # главное меню сайта
-]
+# menu = [
+#     {"title": "О сайте", "url_name": "about"},
+#     {"title": "Добавить статью", "url_name": "add_page"},
+#     {"title": "Обратная связь", "url_name": "contact"},
+#     {"title": "Войти", "url_name": "login"},  # главное меню сайта
+# ]
 
 
 class WomenHome(DataMixin, ListView):
@@ -76,7 +76,7 @@ class ShowPost(DataMixin, DetailView):
 
 
 def about(request):
-    return render(request, "women/about.html", {"menu": menu, "title": "О сайте"})
+    return render(request, "women/about.html", {"title": "О сайте"})
 
 
 # def addpage(request):
@@ -139,13 +139,12 @@ class ContactFormView(DataMixin, FormView):
 
 
 def about(request):
-
+    return render(request, "women/about.html", {"menu": menu, "title": "О сайте"})
     # contact_list = Women.objects.all()
     # paginator = Paginator(contact_list, 3)
 
     # page_number = request.GET.get('page')
     # page_obj = paginator.get_page(page_number)
-    return render(request, "women/about.html", {"menu": menu, "title": "О сайте"})
 
 
 # def categories(request, cat):
