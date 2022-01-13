@@ -76,7 +76,7 @@ class ShowPost(DataMixin, DetailView):
 
 
 def about(request):
-    return render(request, "women/about.html", {"title": "О сайте"})
+    return render(request, "women/about.html", {"title": "Галерея"})
 
 
 # def addpage(request):
