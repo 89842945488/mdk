@@ -1,7 +1,6 @@
 html, body {
 
-	margin: 0;
-	padding: 0;
+	 
 	height: 100%;
 	width: 100%;
 	color: rgb(0, 0, 0);
@@ -14,16 +13,16 @@ html, body {
 	
 	
 	img.img-article-left {
-	max-width: auto;
-	max-height: auto;
+	width: 400px;
+	height: 300px;
 	float: left;
 	padding: 0 10px 10px 0;
 	}
 	
-	img.img-article-left.thumb {
+	/* img.img-article-left.thumb {
 	max-width: 350px;
 	height: 250px;
-	}
+	} */
 	
 	p.link-read-post {
 	text-align: right;
@@ -43,7 +42,7 @@ html, body {
 	div.article-panel {
 	background: rgb(0, 0, 0);
 	padding: 5px 10px 5px 10px;
-	/* box-sizing border-box; */
+	 
 	overflow: hidden;
 	color: rgb(255, 255, 255);
 	}
@@ -65,11 +64,11 @@ html, body {
 	border-bottom: 1px solid rgb(0, 0, 0);
 	}
 	
-	.table-page {
+	/* .table-page {
 	width: 100%;
 	height: 100%;
 	vertical-align: top;
-	}
+	} */
 	.table-page tr {height: 100%;}
 	
 	.clear {clear: both;}
@@ -345,28 +344,7 @@ html, body {
 	}
 	.highlight .block p { margin: 0; }
 	
-	/* .quote {
-	background: url('../images/blockquote.png') no-repeat 0 10px;
-	padding: 5px 5px 5px 70px;
-	font-family: Sans-serif, Arial, Tahoma;
-	font-style: italic;
-	} */
-	
-	#footer {
-	box-sizing: border-box;
-	
-	background: #240029;
-	padding: 5px;
-	color: rgb(255, 255, 255);
-	font-size: 14px;
-	
-	text-align: center;
-	
-	}
-	#footer a {
-	text-decoration: underline;
-	color: rgb(51, 25, 25);
-	}
+ 
 	
 	.form-input {
 	width: 300px;
@@ -410,7 +388,7 @@ html, body {
 	
 	
 	
-	.list-pages .page-num {
+	/* .list-pages .page-num {
 	display: inline-block;
 	width: 60px;
 	height: 44px;
@@ -432,7 +410,7 @@ html, body {
 	box-shadow: none;
 	
 	
-	}
+	} */
 	.form-button {
 	
 	appearance: none;
@@ -473,4 +451,8 @@ html, body {
 	.form-button:active {
 	box-shadow: none;
 	transform: translateY(0);
+	}
+
+	.nav-link2{
+padding-top: 20px;
 	}

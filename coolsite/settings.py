@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "captcha",
     "debug_toolbar",
     "women.apps.WomenConfig",  # мое приложение
+
 ]
 
 MIDDLEWARE = [

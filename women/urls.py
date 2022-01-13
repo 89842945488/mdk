@@ -1,4 +1,4 @@
-from django.urls import path, re_path
+from django.urls import path
 from django.views.decorators.cache import cache_page
 from .views import *
 
@@ -13,4 +13,5 @@ urlpatterns = [
     path("category/<slug:cat_slug>/", WomenCategory.as_view(), name="category"),
     path("logout/", logout_user, name="logout"),
     # связать  функции представления всех страниц с соответствующим URL-адресом
+    
 ]

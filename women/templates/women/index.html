@@ -1,6 +1,43 @@
 {% extends 'women/base.html' %}
 
 {% block content %}
+
+
+
+
+<!-- <div class="row">
+    {% for p in posts %}
+    <div class="col-lg-8">
+      
+        <div class="card mb-2">
+            {% if p.photo %}
+            <img class="card-img-top " src="{{p.photo.url}}" alt="..." />
+            {% endif %}
+            <div class="card-body ">
+
+                <div class="small text-muted">Дата: {{p.time_update|date:"d-m-Y H:i:s"}}</div>
+                <h2 class="card-title">Категория: {{p.cat}}</h2>
+                {% autoescape on %}
+                <p class="card-text">{{p.content|linebreaks|truncatewords:50}}</p>
+                <a class="btn btn-primary" href="{{ p.get_absolute_url }}">Читать пост →</a>
+                {% endautoescape %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div> -->
+
+
+
+
+
+
+
+
+
+
+
+
 <ul class="list-articles">
     {% for p in posts %}
     <li>

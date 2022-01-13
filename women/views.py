@@ -1,5 +1,5 @@
 # from django.http.response import Http404
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import redirect, render
 from django.urls.base import reverse_lazy  # в качестве главной
 
 #  страницы мы бы хотели отобразить некоторый
@@ -7,18 +7,18 @@ from django.urls.base import reverse_lazy  # в качестве главной
 #  нам нужно импортировать встроенный в Django шаблонизатор.
 from .utils import *
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse, request
+
 from django.views.generic.edit import CreateView, FormView
 from women.forms import *
 from women.models import Category, Women
 from django.views.generic import ListView, DetailView
-from django.core.paginator import Paginator
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from django import forms
-from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.views import LoginView, LogoutView
+
+
+from django.contrib.auth.forms import UserCreationForm
+
+
+from django.contrib.auth import login, logout
+from django.contrib.auth.views import LoginView
 
 # Create your views here.
 
